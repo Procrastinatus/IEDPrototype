@@ -1940,5 +1940,5 @@ iedModel_GenericIO_GGIO1_SPCSO3_ctlModel.mmsValue = MmsValue_newIntegerFromInt32
 
 iedModel_GenericIO_GGIO1_SPCSO4_ctlModel.mmsValue = MmsValue_newIntegerFromInt32(1);
 
-iedModel_GenericIO_GGIO1_AnIn2_mag_f.mmsValue = MmsValue_newFloat(2);
+//iedModel_GenericIO_GGIO1_AnIn2_mag_f.mmsValue = MmsValue_newFloat(2);
 }

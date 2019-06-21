@@ -60,7 +60,7 @@ gooseListener(GooseSubscriber subscriber, void* parameter)
     //Try modifying model directly?
     //DA Changes = Immediately send out GOOSE?
     printf("Attempting to change some data attribute...\n");
-    IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, MmsValue_newIntegerFromInt32(5));
+    IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, MmsValue_newFloat(5));
 }
 
 int
@@ -71,7 +71,7 @@ start_goose_receiver(int argc, char** argv)
     printf("GOOSE RECEIVER Using interface (lo)\n");
     GooseReceiver_setInterfaceId(receiver, "lo");
 
-    printf("Addr of EXTERN iedServer is %p\n",&iedServer);
+    //printf("Addr of EXTERN iedServer is %p\n",&iedServer);
     
     GooseSubscriber subscriber = GooseSubscriber_create("simpleIOGenericIO/LLN0$GO$gcbAnalogValues", NULL);
 
