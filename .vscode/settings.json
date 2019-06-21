@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "mms_value.h": "c",
+        "goose_in.h": "c",
+        "goose_publisher.h": "c"
+    }
+}

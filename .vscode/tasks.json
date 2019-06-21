@@ -1,0 +1,59 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build main",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-pthread",
+                "-lrt",
+                "-c",
+                "-g",
+                "-I",
+                "${workspaceFolder}/.install/include",
+                "-I",
+                "${workspaceFolder}/.install/hal/inc",
+                "-MMD","-MP","-MF",
+                "${workspaceFolder}/vscode-build/${fileBasenameNoExtension}.o.d",
+                "-o", "${workspaceFolder}/vscode-build/${fileBasenameNoExtension}.o",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Link files",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-pthread",
+                "-lrt",
+                "-o",
+                "${workspaceFolder}/vscode-build/${fileBasenameNoExtension}",
+                "${workspaceFolder}/vscode-build/${fileBasenameNoExtension}.o",
+                "${workspaceFolder}/.install/lib/libiec61850.a"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
