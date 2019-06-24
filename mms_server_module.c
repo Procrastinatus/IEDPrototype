@@ -21,13 +21,9 @@
 
 #include "mms_server_module.h"
 
-//For global variable iedServer
-//#include "main.c"
-
 /* import IEC 61850 device model created from SCL-File */
 extern IedModel iedModel;
 
-//iedServer will be used by other files so no static!
 static int running = 0;
 IedServer iedServer = NULL;
 
@@ -62,25 +58,25 @@ controlHandlerForBinaryOutput(void* parameter, MmsValue* value)
         IedServer_updateUTCTimeAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_t, timestamp);
         IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_stVal, value);
     }
-    //printf("stVal of SPCSO1 is %d\n", IEDMODEL_GenericIO_GGIO1_SPCSO1_stVal->mmsValue);
-    //printf("stVal of SPCSO2 is %d\n", IEDMODEL_GenericIO_GGIO1_SPCSO2_stVal->mmsValue);
-    //printf("stVal of SPCSO3 is %d\n", IEDMODEL_GenericIO_GGIO1_SPCSO3_stVal->mmsValue);
-    //printf("stVal of SPCSO4 is %d\n", IEDMODEL_GenericIO_GGIO1_SPCSO4_stVal->mmsValue);
 }
 
-int start_mms_server() {
+int start_mms_server(char* interface) {
         
 	iedServer = IedServer_create(&iedModel);
-        //iedServer = ied_server;
+	char* ethernetIfcID = NULL;
+        if(interface!=NULL)
+            ethernetIfcID = interface;
+        else
+            ethernetIfcID = "lo";
         
-        printf("Addr of iedServer is %p\n",&iedServer);
-	
-	char* ethernetIfcID = "lo";
-        printf("MMS Server Using GOOSE interface: %s\n", ethernetIfcID);
+        printf("MMS Server + GOOSE Publisher Using interface: %s\n", ethernetIfcID);
 	IedServer_setGooseInterfaceId(iedServer, ethernetIfcID);
 
-
 	/* MMS server will be instructed to start listening to client connections. */
+        // IP must be same as interface, if not it'll segfault
+        //char ied_ip[] = "192.168.16.51";
+        //printf("The IED MMS Server's IP address is %s \n", ied_ip);
+        //IedServer_setLocalIpAddress(iedServer, ied_ip);
 	IedServer_start(iedServer, 102);
 
 	IedServer_setControlHandler(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO1, (ControlHandler) controlHandlerForBinaryOutput,
@@ -103,25 +99,16 @@ int start_mms_server() {
 
 	/* Start GOOSE publishing */
 	IedServer_enableGoosePublishing(iedServer);
-
 	running = 1;
-
 	signal(SIGINT, mms_server_module_sigint_handler);
-
 	float anIn1 = 0.f;
-
 	while (running) {
-
 	    IedServer_lockDataModel(iedServer);
-
             IedServer_updateUTCTimeAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn1_t, Hal_getTimeInMs());
 	    IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn1_mag_f, anIn1);
             //IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, MmsValue_newFloat(5));
-
 	    IedServer_unlockDataModel(iedServer);
-
 	    //anIn1 += 0.1;
-
 		Thread_sleep(1000);
 	}
 

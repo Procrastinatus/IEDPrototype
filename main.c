@@ -42,22 +42,27 @@
 int
 main(int argc, char** argv)
 {
-    /* import IEC 61850 device model created from SCL-File */
-    //extern IedModel iedModel;
-    //IedServer iedServer = NULL;
-    //iedServer = IedServer_create(&iedModel);
+    //char* interface = NULL;
+    char interface[] = "eno1";
+    /*
+    if (argc > 1)
+       interface = argv[1];
+    else
+       interface = lo_interface;
     
-    //Start threads for different modules (GOOSE Receiver, GOOSE Publisher, MMS Server)
-    pthread_t goose_publisher_thread, goose_receiver_thread, mms_server_thread;
-    int goose_publ_thread_id, goose_recv_thread_id, mms_server_thread_id;
+    char* fake_mac = argv[2];
+    */
+    printf("Main Method Using interface %s\n", interface);
+    
+    printf("This prototype IED uses a static model. \n");
+    printf("It has a few modules; a GOOSE receiver, and a (MMS server + GOOSE Publisher) bundled module. \n");
+    pthread_t goose_receiver_thread, mms_server_thread;
+    int goose_recv_thread_id, mms_server_thread_id;
 
-    //goose_publ_thread_id = pthread_create(&goose_publisher_thread, NULL, start_goose_publisher, &argv); 
-    goose_recv_thread_id = pthread_create(&goose_receiver_thread, NULL, start_goose_receiver, NULL); 
-    mms_server_thread_id = pthread_create(&mms_server_thread, NULL, start_mms_server, NULL); 
-    //pthread_join(goose_publisher_thread, NULL); 
+    goose_recv_thread_id = pthread_create(&goose_receiver_thread, NULL, start_goose_receiver, interface); 
+    mms_server_thread_id = pthread_create(&mms_server_thread, NULL, start_mms_server, interface); 
     pthread_join(goose_receiver_thread, NULL); 
     pthread_join(mms_server_thread, NULL); 
-    printf("Reached main exit");
-    //start_goose_publisher(0, argv);
-    //start_goose_receiver(0, argv);
+    printf("Reached main exit\n");
+    return(0);
 }

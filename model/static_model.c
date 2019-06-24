@@ -1916,7 +1916,7 @@ IedModel iedModel = {
     &iedModel_GenericIO,
     &iedModelds_GenericIO_LLN0_Events,
     &iedModel_GenericIO_LLN0_report0,
-    &iedModel_GenericIO_LLN0_gse0,
+    &iedModel_GenericIO_LLN0_gse1,
     NULL,
     NULL,
     NULL,
@@ -1940,5 +1940,4 @@ iedModel_GenericIO_GGIO1_SPCSO3_ctlModel.mmsValue = MmsValue_newIntegerFromInt32
 
 iedModel_GenericIO_GGIO1_SPCSO4_ctlModel.mmsValue = MmsValue_newIntegerFromInt32(1);
 
-//iedModel_GenericIO_GGIO1_AnIn2_mag_f.mmsValue = MmsValue_newFloat(2);
 }

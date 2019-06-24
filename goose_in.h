@@ -24,7 +24,7 @@ extern "C" {
 
 void sigint_handler(int signalId);
 void gooseListener(GooseSubscriber subscriber, void* parameter);
-int start_goose_receiver(int argc, char** argv);
+int start_goose_receiver(char* interface);
 
 
 #ifdef __cplusplus

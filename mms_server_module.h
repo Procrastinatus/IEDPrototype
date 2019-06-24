@@ -22,7 +22,7 @@ extern IedServer iedServer;
 
 void mms_server_module_handler(int signalId);
 void controlHandlerForBinaryOutput(void* parameter, MmsValue* value);
-int start_mms_server();
+int start_mms_server(char* interface);
 
 
 
