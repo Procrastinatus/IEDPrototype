@@ -33,6 +33,7 @@
 
 // These two are for MMS server module
 #include "model/static_model.h"
+#include "model/dynamic_model.h"
 #include "mms_server_module.h"
 
 // has to be executed as root!
@@ -43,7 +44,7 @@ int
 main(int argc, char** argv)
 {
     //char* interface = NULL;
-    char interface[] = "eno1";
+    char interface[] = "lo";
     /*
     if (argc > 1)
        interface = argv[1];
@@ -60,7 +61,7 @@ main(int argc, char** argv)
     int goose_recv_thread_id, mms_server_thread_id;
 
     goose_recv_thread_id = pthread_create(&goose_receiver_thread, NULL, start_goose_receiver, interface); 
-    mms_server_thread_id = pthread_create(&mms_server_thread, NULL, start_mms_server, interface); 
+    mms_server_thread_id = pthread_create(&mms_server_thread, NULL, start_dynamic_mms_server, interface); 
     pthread_join(goose_receiver_thread, NULL); 
     pthread_join(mms_server_thread, NULL); 
     printf("Reached main exit\n");

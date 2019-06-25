@@ -75,7 +75,7 @@ gooseExampleListener(GooseSubscriber subscriber, void* parameter)
         printf("Changing HARD-CODED DA (Data Attr.): GGIO_AnIn2_mag_f \n");
         int received_val = MmsValue_toInt32(MmsValue_getElement(values,0));
         float new_anin2_mag_f = (float)received_val;
-        IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, new_anin2_mag_f);
+        //IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, new_anin2_mag_f);
     //};
     
 }

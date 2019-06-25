@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/goose_out.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mms_server_module.o \
+	${OBJECTDIR}/model/dynamic_model.o \
 	${OBJECTDIR}/model/static_model.o
 
 
@@ -87,6 +88,11 @@ ${OBJECTDIR}/mms_server_module.o: mms_server_module.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mms_server_module.o mms_server_module.c
+
+${OBJECTDIR}/model/dynamic_model.o: model/dynamic_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/dynamic_model.o model/dynamic_model.c
 
 ${OBJECTDIR}/model/static_model.o: model/static_model.c
 	${MKDIR} -p ${OBJECTDIR}/model

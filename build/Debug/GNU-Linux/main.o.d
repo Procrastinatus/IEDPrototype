@@ -9,7 +9,7 @@ build/Debug/GNU-Linux/main.o: main.c .install/include/mms_value.h \
  .install/include/goose_subscriber.h .install/include/goose_subscriber.h \
  goose_out.h model/static_model.h .install/include/iec61850_model.h \
  .install/include/iec61850_common.h .install/include/logging_api.h \
- mms_server_module.h .install/include/iec61850_server.h \
+ model/dynamic_model.h .install/include/iec61850_server.h \
  .install/include/mms_server.h .install/include/mms_device_model.h \
  .install/include/mms_type_spec.h \
  .install/include/mms_named_variable_list.h .install/include/iso_server.h \
@@ -18,7 +18,7 @@ build/Debug/GNU-Linux/main.o: main.c .install/include/mms_value.h \
  .install/include/tls_config.h .install/include/iec61850_dynamic_model.h \
  .install/include/iec61850_model.h .install/include/iec61850_cdc.h \
  .install/include/hal_filesystem.h \
- .install/include/iec61850_config_file_parser.h
+ .install/include/iec61850_config_file_parser.h mms_server_module.h
 
 .install/include/mms_value.h:
 
@@ -62,7 +62,7 @@ model/static_model.h:
 
 .install/include/logging_api.h:
 
-mms_server_module.h:
+model/dynamic_model.h:
 
 .install/include/iec61850_server.h:
 
@@ -91,3 +91,5 @@ mms_server_module.h:
 .install/include/hal_filesystem.h:
 
 .install/include/iec61850_config_file_parser.h:
+
+mms_server_module.h:

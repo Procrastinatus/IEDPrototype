@@ -22,8 +22,9 @@ extern IedServer iedServer;
 
 void mms_server_module_handler(int signalId);
 void controlHandlerForBinaryOutput(void* parameter, MmsValue* value);
-int start_mms_server(char* interface);
-
+static MmsDataAccessError writeAccessHandler (DataAttribute* dataAttribute, MmsValue* value, ClientConnection connection, void* parameter);
+int start_static_mms_server(char* interface);
+int start_dynamic_mms_server(char* interface);
 
 
 #ifdef __cplusplus

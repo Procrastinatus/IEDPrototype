@@ -1916,7 +1916,7 @@ IedModel iedModel = {
     &iedModel_GenericIO,
     &iedModelds_GenericIO_LLN0_Events,
     &iedModel_GenericIO_LLN0_report0,
-    &iedModel_GenericIO_LLN0_gse1,
+    &iedModel_GenericIO_LLN0_gse0,
     NULL,
     NULL,
     NULL,
