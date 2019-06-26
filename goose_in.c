@@ -29,7 +29,7 @@
 extern IedModel iedModel;
 extern IedServer iedServer;
 
-static int running = 1;
+static int running = 0;
 
 void goose_in_sigint_handler(int signalId)
 {
@@ -81,16 +81,17 @@ gooseExampleListener(GooseSubscriber subscriber, void* parameter)
 }
 
 int
-start_goose_receiver(char* interface)
+start_goose_receiver(void* arguments)
 {
+    Arg_pack* args = arguments; 
+    printf("args MemAddr: %p \n", args);
     iedServer = IedServer_create(&iedModel);
     char* ethernetIfcID = NULL;
-    if(interface!=NULL)
-        ethernetIfcID = interface;
-    else
+
         ethernetIfcID = "lo";
     
     GooseReceiver receiver = GooseReceiver_create();
+    printf("GOOSE Receiver MemAddr: %p \n", &receiver);
 
     printf("GOOSE RECEIVER Using interface %s\n", ethernetIfcID);
     GooseReceiver_setInterfaceId(receiver, ethernetIfcID);
@@ -109,6 +110,7 @@ start_goose_receiver(char* interface)
 
     GooseReceiver_start(receiver);
 
+    running = 1;
     signal(SIGINT, goose_in_sigint_handler);
 
     while (running) {

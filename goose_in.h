@@ -21,10 +21,11 @@ extern "C" {
 #include "goose_receiver.h"
 #include "goose_subscriber.h"
 #include "hal_thread.h"
+#include "model/custom_structs.h"
 
 void sigint_handler(int signalId);
 void gooseListener(GooseSubscriber subscriber, void* parameter);
-int start_goose_receiver(char* interface);
+int start_goose_receiver(void* arguments);
 
 
 #ifdef __cplusplus

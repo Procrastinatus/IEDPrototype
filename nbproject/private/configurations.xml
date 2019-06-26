@@ -17,6 +17,7 @@
         </gdb_signals>
         <gdb_options>
           <DebugOptions>
+            <option name="debug_command" value="${OUTPUT_PATH} -p 103 -i lo -n 1"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
@@ -30,6 +31,7 @@
           <runcommandpicklistitem>"${OUTPUT_PATH} lo"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH} -lo"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -lo</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -startport 103 -n 1 -i lo</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>

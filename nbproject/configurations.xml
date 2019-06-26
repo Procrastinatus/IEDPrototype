@@ -19,6 +19,7 @@
                      displayName="Model (Logical Folder)"
                      projectFiles="true">
         <logicalFolder name="model" displayName="model" projectFiles="true">
+          <itemPath>model/custom_structs.h</itemPath>
           <itemPath>model/dynamic_model.c</itemPath>
           <itemPath>model/dynamic_model.h</itemPath>
           <itemPath>model/static_model.c</itemPath>
@@ -92,6 +93,8 @@
       </item>
       <item path="mms_server_module.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="model/custom_structs.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="model/dynamic_model.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="model/dynamic_model.h" ex="false" tool="3" flavor2="0">
@@ -145,6 +148,8 @@
       <item path="mms_server_module.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="mms_server_module.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="model/custom_structs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="model/dynamic_model.c" ex="false" tool="0" flavor2="0">
       </item>

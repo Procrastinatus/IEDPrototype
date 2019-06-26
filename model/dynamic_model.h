@@ -13,9 +13,11 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "custom_structs.h"
 
-
-IedModel* create_dynamic_model();
+IedModel* create_dynamic_model(Arg_pack* args);
+DataAttribute* get_temperature_value();
+DataAttribute* get_temperature_timestamp();
 
 #ifdef __cplusplus
 extern "C" {
