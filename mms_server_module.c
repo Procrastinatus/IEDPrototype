@@ -177,7 +177,7 @@ int start_dynamic_mms_server(void* arguments) {
 	IedServer iedServer = IedServer_create(model);
         //printf("MemAddr of IED Server: %p \n", iedServer);
 		char* ethernetIfcID = NULL;
-		ethernetIfcID = "lo";
+		ethernetIfcID = args->interface;
 		IedServer_setGooseInterfaceId(iedServer, ethernetIfcID);
 		IedServer_enableGoosePublishing(iedServer);
 

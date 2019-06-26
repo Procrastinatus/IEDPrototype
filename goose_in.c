@@ -88,7 +88,7 @@ start_goose_receiver(void* arguments)
     iedServer = IedServer_create(&iedModel);
     char* ethernetIfcID = NULL;
 
-        ethernetIfcID = "lo";
+        ethernetIfcID = args->interface;
     
     GooseReceiver receiver = GooseReceiver_create();
     printf("GOOSE Receiver MemAddr: %p \n", &receiver);
