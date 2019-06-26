@@ -6,7 +6,7 @@ There are usable bash scripts in dist/Debug/GNU-Linux that allow you to start & 
 The current prototype IED has a bundled (MMS Server + GOOSE Publisher) module, and a GOOSE Receiver module.
 
 Usage:
-sudo ./iedprototype -p <port> -i <interface> -n <IED number> 
+sudo ./iedprototype -p \<port\> -i \<interface\> -n \<IED number\> 
 
 -p flag determines the port that the MMS server runs on.
 MMS servers typically run on TCP port 102.
