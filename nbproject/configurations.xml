@@ -65,7 +65,7 @@
             <pElem>.install/include</pElem>
             <pElem>.install/hal/inc</pElem>
           </incDir>
-          <commandLine>-pthread -lrt</commandLine>
+          <commandLine>-pthread -lrt -g</commandLine>
         </cTool>
         <ccTool>
           <incDir>

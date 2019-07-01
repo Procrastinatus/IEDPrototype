@@ -12,7 +12,8 @@
             <file>file:/home/adsc/Desktop/IEDPrototype/main.c</file>
             <file>file:/home/adsc/Desktop/IEDPrototype/mms_server_module.c</file>
             <file>file:/home/adsc/Desktop/IEDPrototype/model/dynamic_model.h</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/model/static_model.c</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/model/custom_structs.h</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/goose_in.h</file>
             <file>file:/home/adsc/Desktop/IEDPrototype/mms_server_module.h</file>
         </group>
     </open-files>

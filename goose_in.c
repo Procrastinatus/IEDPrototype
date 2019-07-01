@@ -28,6 +28,7 @@
 /* import IEC 61850 device mod */
 extern IedModel iedModel;
 extern IedServer iedServer;
+extern DataAttribute* lln0_vendor_DA;
 
 static int running = 0;
 
@@ -39,28 +40,22 @@ void goose_in_sigint_handler(int signalId)
 void
 gooseListener(GooseSubscriber subscriber, void* parameter)
 {
-    printf("GOOSE event:\n");
+    printf("GOOSE analog event:\n");
     printf("  stNum: %u sqNum: %u\n", GooseSubscriber_getStNum(subscriber),
             GooseSubscriber_getSqNum(subscriber));
     printf("  timeToLive: %u\n", GooseSubscriber_getTimeAllowedToLive(subscriber));
-
     uint64_t timestamp = GooseSubscriber_getTimestamp(subscriber);
-
     printf("  timestamp: %u.%u\n", (uint32_t) (timestamp / 1000), (uint32_t) (timestamp % 1000));
-
     MmsValue* values = GooseSubscriber_getDataSetValues(subscriber);
-
     char buffer[1024];
-
     MmsValue_printToBuffer(values, buffer, 1024);
-
-    printf("%s\n", buffer);
+    printf("instMag.f values%s\n", buffer);
 }
 
 void
 gooseExampleListener(GooseSubscriber subscriber, void* parameter)
 {
-    printf("GOOSE ANALOG event:\n");
+    printf("GOOSE vendor event:\n");
     printf("  stNum: %u sqNum: %u\n", GooseSubscriber_getStNum(subscriber),
             GooseSubscriber_getSqNum(subscriber));
     printf("  timeToLive: %u\n", GooseSubscriber_getTimeAllowedToLive(subscriber));
@@ -69,14 +64,13 @@ gooseExampleListener(GooseSubscriber subscriber, void* parameter)
     MmsValue* values = GooseSubscriber_getDataSetValues(subscriber);
     char buffer[1024];
     MmsValue_printToBuffer(values, buffer, 1024);
-    printf("Analog values : %s\n", buffer);
-    //if (GooseSubscriber_getSqNum(subscriber)==0 && GooseSubscriber_getStNum(subscriber)>1){
+    printf("vendor values : %s\n", buffer);
+    
+    if (GooseSubscriber_getSqNum(subscriber)==0 && GooseSubscriber_getStNum(subscriber)>1){
         printf("stNum increased, sqNum reset, Attempting to change some data attribute...\n");
-        printf("Changing HARD-CODED DA (Data Attr.): GGIO_AnIn2_mag_f \n");
-        int received_val = MmsValue_toInt32(MmsValue_getElement(values,0));
-        float new_anin2_mag_f = (float)received_val;
-        //IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, new_anin2_mag_f);
-    //};
+        printf("Changing HARD-CODED DA (Data Attr.): LLN0_NamPlt_vendor \n");
+        IedServer_updateVisibleStringAttributeValue(iedServer, lln0_vendor_DA, "new_vendor_val");
+    };
     
 }
 
@@ -84,27 +78,27 @@ int
 start_goose_receiver(void* arguments)
 {
     Arg_pack* args = arguments; 
-    printf("args MemAddr: %p \n", args);
+    //printf("args MemAddr: %p \n", args);
     iedServer = IedServer_create(&iedModel);
     char* ethernetIfcID = NULL;
 
         ethernetIfcID = args->interface;
     
     GooseReceiver receiver = GooseReceiver_create();
-    printf("GOOSE Receiver MemAddr: %p \n", &receiver);
+    //printf("GOOSE Receiver MemAddr: %p \n", &receiver);
 
     printf("GOOSE RECEIVER Using interface %s\n", ethernetIfcID);
     GooseReceiver_setInterfaceId(receiver, ethernetIfcID);
     
-    //Make sure APPID from publisher matches that of subscribers!
+    //Make sure APPID from publisher or data model matches that of subscribers!
     
-    //GooseSubscriber event_subscriber = GooseSubscriber_create("simpleIOGenericIO/LLN0$GO$gcbEvents", NULL);
-    //GooseSubscriber_setAppId(event_subscriber, 4096);
-    //GooseSubscriber_setListener(event_subscriber, gooseListener, NULL);   
-    //GooseReceiver_addSubscriber(receiver, event_subscriber);
+    GooseSubscriber event_subscriber = GooseSubscriber_create("PDEVLDEV/LLN0$GO$gse01", NULL);
+    GooseSubscriber_setAppId(event_subscriber, 4096);
+    GooseSubscriber_setListener(event_subscriber, gooseListener, NULL);   
+    GooseReceiver_addSubscriber(receiver, event_subscriber);
     
-    GooseSubscriber subscriber = GooseSubscriber_create("simpleIOGenericIO/LLN0$GO$gcbAnalogValues", NULL);
-    GooseSubscriber_setAppId(subscriber, 1000);
+    GooseSubscriber subscriber = GooseSubscriber_create("PDEVLDEV/LLN0$GO$mygocb", NULL);
+    GooseSubscriber_setAppId(subscriber, 4096);
     GooseSubscriber_setListener(subscriber, gooseExampleListener, NULL);
     GooseReceiver_addSubscriber(receiver, subscriber);
 

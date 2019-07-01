@@ -63,15 +63,15 @@ controlHandlerForBinaryOutput(void* parameter, MmsValue* value)
         IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_stVal, value);
     }
     
-    if (parameter == IEDMODEL_GenericIO_GGIO1_AnIn2) {
+    //if (parameter == IEDMODEL_GenericIO_GGIO1_AnIn2) {
         //IedServer_updateUTCTimeAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_t, timestamp);
         //IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_stVal, value);
         printf("stNum increased, sqNum reset, Attempting to change some data attribute...\n");
         printf("Changing HARD-CODED DA (Data Attr.): GGIO_AnIn2_mag_f \n");
-        //int received_val = MmsValue_toInt32(MmsValue_getElement(value,0));
-        //float new_anin2_mag_f = (float)received_val;
-        //IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, new_anin2_mag_f);
-    }
+        int received_val = MmsValue_toInt32(MmsValue_getElement(value,0));
+        float new_anin2_mag_f = (float)received_val;
+        IedServer_updateFloatAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_AnIn2_mag_f, new_anin2_mag_f);
+    //}
 }
 
 static MmsDataAccessError
@@ -114,7 +114,7 @@ int start_static_mms_server(char* interface) {
                 
 	/* Don't allow access to SP variables by default */
 	IedServer_setWriteAccessPolicy(iedServer, IEC61850_FC_DC, ACCESS_POLICY_ALLOW);
-        IedServer_handleWriteAccess(iedServer, IEDMODEL_GenericIO_LLN0_NamPlt_vendor, writeAccessHandler, NULL);
+        IedServer_handleWriteAccess(iedServer, IEDMODEL_GenericIO_LLN0_NamPlt_vendor, (ControlHandler) controlHandlerForBinaryOutput, NULL);
         
 	IedServer_setControlHandler(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO1, (ControlHandler) controlHandlerForBinaryOutput,
 	        IEDMODEL_GenericIO_GGIO1_SPCSO1);
@@ -175,6 +175,7 @@ int start_dynamic_mms_server(void* arguments) {
      * run server
      ********************/
 	IedServer iedServer = IedServer_create(model);
+        IedServer_setWriteAccessPolicy(iedServer, IEC61850_FC_DC, ACCESS_POLICY_ALLOW);
         //printf("MemAddr of IED Server: %p \n", iedServer);
 		char* ethernetIfcID = NULL;
 		ethernetIfcID = args->interface;
@@ -192,6 +193,12 @@ int start_dynamic_mms_server(void* arguments) {
 	running = 1;
 	signal(SIGINT, mms_server_module_sigint_handler);
 	float val = 0.f;
+        
+        /* Initialize values here */
+        /* DataAttribute objects should be exposed from dynamic_model.c and/or its header */
+        extern DataAttribute* lln0_vendor_DA;
+        IedServer_updateVisibleStringAttributeValue(iedServer, lln0_vendor_DA, "orig_vendor_val");
+        
 	while (running) {
 	    IedServer_lockDataModel(iedServer);
 	    IedServer_updateUTCTimeAttributeValue(iedServer, temperatureTimestamp, Hal_getTimeInMs());

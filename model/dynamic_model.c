@@ -12,13 +12,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//Should all attributes that require reading/writing be declared as global variables handles?
+//(i.e. Access these from other files using extern?)
 DataAttribute* temperatureValue;
 DataAttribute* temperatureTimestamp;
+DataAttribute* lln0_vendor_DA;
 
 IedModel* create_dynamic_model(Arg_pack* args) {
     /*********************
      * Setup data model
      ********************/
+    /*
     //Get IED ID from args and convert to string
     char ied_id_string[sizeof (int) * 4 + 1];
     sprintf(ied_id_string, "%d", args->n);    
@@ -27,7 +31,8 @@ IedModel* create_dynamic_model(Arg_pack* args) {
     char* final_physical_name = (char *) malloc(1 + strlen(physical_device_name) + strlen(ied_id_string));
     strcat(final_physical_name, physical_device_name);
     strcat(final_physical_name, ied_id_string);
-    
+    */
+    char* final_physical_name = "PDEV";
     /* The GOOSE packets should show different physical device names if you have provided different -n flags when running*/
     IedModel* model = IedModel_create(final_physical_name);
     LogicalDevice* lDevice1 = LogicalDevice_create("LDEV", model);
@@ -48,23 +53,14 @@ IedModel* create_dynamic_model(Arg_pack* args) {
     //ReportControlBlock_create("events02", lln0, "events02", false, NULL, 1, TRG_OPT_DATA_CHANGED, rptOptions, 50, 0);
     GSEControlBlock_create("gse01", lln0, "events01", "events", 1, false, 200, 3000);
 
-    /* Add a lln0 nameplate (TODO: NOT WORKING YET) */
-    DataObject* lln0_namplt = DataObject_create("NamPlt", (ModelNode*) lln0, 0);
-    //DataAttribute* lln0_vendor_DA = DataAttribute_create("vendor", (ModelNode*)lln0, IEC61850_UNICODE_STRING_255, IEC61850_FC_DC, 0, 0, NULL);
-    DataAttribute* lln0_vendor_DA = (DataAttribute*) ModelNode_getChild((ModelNode*) lln0_namplt, "vendor");
+    /* Add a lln0 nameplate */
+    DataObject* lln0_namplt = CDC_DPL_create("NamPlt", (ModelNode*)lln0, 0);
+    lln0_vendor_DA = ModelNode_getChild((ModelNode*) lln0_namplt, "vendor");
+    lln0_vendor_DA->mmsValue = MmsValue_newMmsString("orig_vendor");
     DataSet* my_test_dataset = DataSet_create("mydataset", lln0);
-    //DataSetEntry_create(my_test_dataset, "LLN0$DC$NamPlt$vendor", -1, NULL);
-    GSEControlBlock_create("mygocb", lln0, "appid01", "mydataset", 1, false, 200, 3000);
-
-    /* Add a writeable value for MMS clients (TODO: NOT WORKING YET)*/
-    //LogicalNode* zinv1 = LogicalNode_create("ZINV1", lDevice1);
-    //DataObject* zinv1_outvarset = DataObject_create("OutVarSet", (ModelNode*)zinv1, 0);
-    //DataAttribute* lln0_vendor_DA = DataAttribute_create("vendor", (ModelNode*)lln0, IEC61850_UNICODE_STRING_255, IEC61850_FC_DC, 0, 0, NULL);
-    //DataAttribute* setmag_val = (DataAttribute*) ModelNode_getChild((ModelNode*) zinv1_outvarset, "setMag.f");
-    //DataAttribute* timestamp_val = (DataAttribute*) ModelNode_getChild((ModelNode*) zinv1_outvarset, "t");
-    //DataSet* my_test_dataset2 = DataSet_create("mydataset2", zinv1);
-    //DataSetEntry_create(my_test_dataset2, "ZINV1$OutVarSet$setMag$f", -1, NULL);
-    //GSEControlBlock_create("mygocb2", zinv1, "appid01", "mydataset2", 1, false, 200, 3000);
+    DataSetEntry_create(my_test_dataset, "LLN0$DC$NamPlt$vendor", -1, NULL);
+    GSEControlBlock_create("mygocb", lln0, "mygoid", "mydataset", 1, false, 200, 3000);
+    
     return model;
 }
 

@@ -46,9 +46,9 @@ void main_sigint_handler(int dummy) {
 
 int
 main(int argc, char** argv) {
-    printf("Usage: -p <port> -i <interface> -n <IED number> \n");
-    printf("The -n flag is simply for distinguishing IEDs, i.e. the physical device name will change. \n");
-    printf("port may be opened on ALL interfaces (TODO: check) \n");
+    //printf("Usage: -p <port> -i <interface> -n <IED number> \n");
+    //printf("The -n flag is simply for distinguishing IEDs, i.e. the physical device name will change. \n");
+    //printf("port may be opened on ALL interfaces (TODO: check) \n");
 
     signal(SIGINT, &main_sigint_handler);    
     //Initialise struct instance with default values
