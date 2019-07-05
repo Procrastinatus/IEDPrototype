@@ -14,7 +14,8 @@ build/Debug/GNU-Linux/model/dynamic_model.o: model/dynamic_model.c \
  .install/include/iec61850_model.h .install/include/iec61850_common.h \
  .install/include/iec61850_cdc.h .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
- .install/include/hal_thread.h model/custom_structs.h
+ .install/include/hal_thread.h model/custom_structs.h \
+ .install/include/linked_list.h
 
 .install/include/iec61850_server.h:
 
@@ -67,3 +68,5 @@ build/Debug/GNU-Linux/model/dynamic_model.o: model/dynamic_model.c \
 .install/include/hal_thread.h:
 
 model/custom_structs.h:
+
+.install/include/linked_list.h:

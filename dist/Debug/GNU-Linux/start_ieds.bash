@@ -1,5 +1,5 @@
 #!/bin/bash
-iface="eno1";
+iface="lo";
 ied_id=1;
 for i in {102..103}
 do

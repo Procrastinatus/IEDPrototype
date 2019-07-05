@@ -18,12 +18,25 @@
 extern "C" {
 #endif
 
+#include "linked_list.h"
+
 //This struct is for passing arguments from main() to child threads
 typedef struct arg_pack{
     char* interface;
-    int opt,start_port,n;
+    char mode;
+    int opt, start_port, n;
+    LinkedList go_cb_refs;
+    int goose_appid, sv_appid;
 } Arg_pack;
 
+typedef struct received_goose_data{
+    char* go_cb_ref;
+    float new_val;
+} Received_goose_data;
+
+typedef struct gooseSubscribers{
+    LinkedList subscribers;
+} GooseSubscribers;
 
 #ifdef __cplusplus
 }

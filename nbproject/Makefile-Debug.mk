@@ -39,8 +39,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/goose_out.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mms_server_module.o \
+	${OBJECTDIR}/model/LIED10_model.o \
 	${OBJECTDIR}/model/dynamic_model.o \
-	${OBJECTDIR}/model/static_model.o
+	${OBJECTDIR}/sv_in.o
 
 
 # C Compiler Flags
@@ -89,15 +90,20 @@ ${OBJECTDIR}/mms_server_module.o: mms_server_module.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mms_server_module.o mms_server_module.c
 
+${OBJECTDIR}/model/LIED10_model.o: model/LIED10_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/LIED10_model.o model/LIED10_model.c
+
 ${OBJECTDIR}/model/dynamic_model.o: model/dynamic_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/dynamic_model.o model/dynamic_model.c
 
-${OBJECTDIR}/model/static_model.o: model/static_model.c
-	${MKDIR} -p ${OBJECTDIR}/model
+${OBJECTDIR}/sv_in.o: sv_in.c
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/static_model.o model/static_model.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sv_in.o sv_in.c
 
 # Subprojects
 .build-subprojects:

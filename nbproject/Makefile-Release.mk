@@ -39,8 +39,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/goose_out.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mms_server_module.o \
+	${OBJECTDIR}/model/BIED100_model.o \
+	${OBJECTDIR}/model/LIED10_model.o \
+	${OBJECTDIR}/model/LIED11_model.o \
+	${OBJECTDIR}/model/TIED13_model.o \
+	${OBJECTDIR}/model/UFIED_model.o \
 	${OBJECTDIR}/model/dynamic_model.o \
-	${OBJECTDIR}/model/static_model.o
+	${OBJECTDIR}/model/static_model.o \
+	${OBJECTDIR}/sv_in.o
 
 
 # C Compiler Flags
@@ -89,6 +95,31 @@ ${OBJECTDIR}/mms_server_module.o: mms_server_module.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mms_server_module.o mms_server_module.c
 
+${OBJECTDIR}/model/BIED100_model.o: model/BIED100_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/BIED100_model.o model/BIED100_model.c
+
+${OBJECTDIR}/model/LIED10_model.o: model/LIED10_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/LIED10_model.o model/LIED10_model.c
+
+${OBJECTDIR}/model/LIED11_model.o: model/LIED11_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/LIED11_model.o model/LIED11_model.c
+
+${OBJECTDIR}/model/TIED13_model.o: model/TIED13_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/TIED13_model.o model/TIED13_model.c
+
+${OBJECTDIR}/model/UFIED_model.o: model/UFIED_model.c
+	${MKDIR} -p ${OBJECTDIR}/model
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/UFIED_model.o model/UFIED_model.c
+
 ${OBJECTDIR}/model/dynamic_model.o: model/dynamic_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
@@ -98,6 +129,11 @@ ${OBJECTDIR}/model/static_model.o: model/static_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/static_model.o model/static_model.c
+
+${OBJECTDIR}/sv_in.o: sv_in.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sv_in.o sv_in.c
 
 # Subprojects
 .build-subprojects:

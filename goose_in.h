@@ -24,7 +24,8 @@ extern "C" {
 #include "model/custom_structs.h"
 
 void sigint_handler(int signalId);
-void gooseListener(GooseSubscriber subscriber, void* parameter);
+void gooseMxListener(GooseSubscriber subscriber, void* parameter);
+void gooseStListener(GooseSubscriber subscriber, void* parameter);
 int start_goose_receiver(void* arguments);
 
 

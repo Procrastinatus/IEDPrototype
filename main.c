@@ -28,8 +28,8 @@
 #include "goose_publisher.h"
 #include "hal_thread.h"
 
-// These are for GOOSE
 #include "goose_in.h"
+#include "sv_in.h"
 
 // These two are for MMS server module
 #include "model/static_model.h"
@@ -46,31 +46,60 @@ void main_sigint_handler(int dummy) {
 
 int
 main(int argc, char** argv) {
-    //printf("Usage: -p <port> -i <interface> -n <IED number> \n");
+    printf("Usage: -p <port> -i <interface> -z <GOOSE_APPID> [-x <gocbRef>] -c <SV_APPID> \n");
+    printf("e.g. ./iedprototype -p 102 -i lo -z 4096 -x LIED10CTRL/LLN0\$GO\$Status -x LIED10PROT/LLN0\$GO\$Alarm -x LIED10MEAS/LLN0\$GO\$Meas -c 4096 \n");
     //printf("The -n flag is simply for distinguishing IEDs, i.e. the physical device name will change. \n");
-    //printf("port may be opened on ALL interfaces (TODO: check) \n");
+    printf("Try escaping the $ signs with a backslash if you can't subscribe to the GOOSE packet(s). \n");
+    printf("-z, -x, -c, are identifiers for LISTENING (e.g. listen for GOOSE pkts with AppID=4096)\n\n");
 
     signal(SIGINT, &main_sigint_handler);    
-    //Initialise struct instance with default values
+    
+    //Initialise struct instance
     Arg_pack args = {
         .interface = NULL,
         .start_port = 0,
-        .n = 0
+        .n = 0,
+        .goose_appid = 0,
+        .go_cb_refs = LinkedList_create(),
+        .sv_appid = 0
     };
 
     //Parse cmd-line arguments
-    while ((args.opt = getopt(argc, argv, "p:i:n:")) != -1) {
+    while ((args.opt = getopt(argc, argv, "p:i:n:z:x:c:")) != -1) {
         switch (args.opt) {
             case 'p':{
                 args.start_port = atoi(optarg);
                 break;
             }
             case 'n':{
-                args.n = atoi(optarg);
+                //n may still be used for differentiating IED names
+                //args.n = atoi(optarg);
                 break;
             }
             case 'i':{
                 args.interface = optarg;
+                break;
+            }
+            
+            case 'z':{
+                /* This is for GOOSE APPID */
+                args.goose_appid = atoi(optarg);
+                break;
+            }
+            case 'x':{
+                /* This is for GOOSE Control Block References */
+                LinkedList_add(args.go_cb_refs, optarg);
+                break;
+            }
+            case 'c':{
+                /* This is for SV APPID */
+                args.sv_appid = atoi(optarg);
+                break;
+            }
+            
+            case 'm':{
+                //printf("model = (s)tatic or (d)ynamic");
+                //args.mode = optarg;
                 break;
             }
             case ':':  {
@@ -88,15 +117,27 @@ main(int argc, char** argv) {
         }
     }
 
-    printf("Starting port is %d, IED ID (n) is %d, interface is %s \n", args.start_port, args.n, args.interface);
-    printf("It has a few modules: a GOOSE receiver, and a (MMS server + GOOSE Publisher) bundled module. \n");
+    for(; optind < argc; optind++){      
+        //printf("extra arguments/gocbrefs: %s\n", argv[optind]); 
+        //LinkedList_add(args.go_cb_refs, argv[optind]);
+    } 
 
-    pthread_t goose_receiver_thread, mms_server_thread;
-    int goose_recv_thread_id, mms_server_thread_id;
+    for(int i=0; i< LinkedList_size(args.go_cb_refs); i++){      
+        //printf("Found gocbrefs: %s\n", (char*)LinkedList_getData(LinkedList_get(args.go_cb_refs, i))); 
+    } 
+    
+    printf("Starting port is %d, interface is %s \n", args.start_port, args.interface);
+    printf("GOOSE AppID is %i\n",args.goose_appid);
+    printf("SV AppID is %i\n",args.sv_appid);
+
+    pthread_t goose_receiver_thread, mms_server_thread, sv_receiver_thread;
+    int goose_recv_thread_id, ied_server_thread_id, sv_recv_thread_id;
 
     goose_recv_thread_id = pthread_create(&goose_receiver_thread, NULL, start_goose_receiver, (void*)&args); 
-    //Note that there is a start_static_mms_server() if you wish to use a static model.
-    mms_server_thread_id = pthread_create(&mms_server_thread, NULL, start_dynamic_mms_server, (void*)&args); 
+    ied_server_thread_id = pthread_create(&mms_server_thread, NULL, start_static_ied_server, (void*)&args); 
+    sv_recv_thread_id = pthread_create(&sv_receiver_thread, NULL, start_sv_receiver, (void*)&args); 
+    sleep(1000);
+
     pthread_join(mms_server_thread, NULL); 
     
     printf("Reached main exit\n");

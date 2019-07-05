@@ -1,17 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * goose_subscriber_example.c
- *
- * This is an example for a standalone GOOSE subscriber
- *
- * Has to be started as root in Linux.
- */
-
 #include "goose_receiver.h"
 #include "goose_subscriber.h"
 #include "hal_thread.h"
@@ -21,14 +7,17 @@
 #include <signal.h>
 
 #include "goose_in.h"
-#include "model/static_model.h"
+//#include "model/static_model.h"
+#include "model/LIED10_model.h"
 #include "mms_server_module.h"
 #include "mms_value.h"
 
 /* import IEC 61850 device mod */
 extern IedModel iedModel;
 extern IedServer iedServer;
-extern DataAttribute* lln0_vendor_DA;
+
+//For static model LIED10_model
+Received_goose_data new_vals;
 
 static int running = 0;
 
@@ -40,21 +29,7 @@ void goose_in_sigint_handler(int signalId)
 void
 gooseListener(GooseSubscriber subscriber, void* parameter)
 {
-    printf("GOOSE analog event:\n");
-    printf("  stNum: %u sqNum: %u\n", GooseSubscriber_getStNum(subscriber),
-            GooseSubscriber_getSqNum(subscriber));
-    printf("  timeToLive: %u\n", GooseSubscriber_getTimeAllowedToLive(subscriber));
-    uint64_t timestamp = GooseSubscriber_getTimestamp(subscriber);
-    printf("  timestamp: %u.%u\n", (uint32_t) (timestamp / 1000), (uint32_t) (timestamp % 1000));
-    MmsValue* values = GooseSubscriber_getDataSetValues(subscriber);
-    char buffer[1024];
-    MmsValue_printToBuffer(values, buffer, 1024);
-    printf("instMag.f values%s\n", buffer);
-}
-
-void
-gooseExampleListener(GooseSubscriber subscriber, void* parameter)
-{
+    printf("=====\nGOCBREF Found: %s \n",(char*)parameter);
     printf("GOOSE vendor event:\n");
     printf("  stNum: %u sqNum: %u\n", GooseSubscriber_getStNum(subscriber),
             GooseSubscriber_getSqNum(subscriber));
@@ -64,54 +39,59 @@ gooseExampleListener(GooseSubscriber subscriber, void* parameter)
     MmsValue* values = GooseSubscriber_getDataSetValues(subscriber);
     char buffer[1024];
     MmsValue_printToBuffer(values, buffer, 1024);
-    printf("vendor values : %s\n", buffer);
+    printf("GOOSE values : %s\n", buffer);
     
+    /* TODO Logic for handling incoming GOOSE messages (differs with each IED?) */
+    if(strcmp("LIED10CTRL/LLN0$GO$Status",parameter) == 0){
+        
+    }
+    if(strcmp("LIED10PROT/LLN0$GO$Alarm",parameter) == 0){
+        
+    }
+    if(strcmp("LIED10MEAS/LLN0$GO$Meas",parameter) == 0){
+        //new_vals.new_val += 1.0f;
+    }   
+    
+    //TODO stNum not increasing even with changed value, what condition to modify data model?
     if (GooseSubscriber_getSqNum(subscriber)==0 && GooseSubscriber_getStNum(subscriber)>1){
         printf("stNum increased, sqNum reset, Attempting to change some data attribute...\n");
         printf("Changing HARD-CODED DA (Data Attr.): LLN0_NamPlt_vendor \n");
-        IedServer_updateVisibleStringAttributeValue(iedServer, lln0_vendor_DA, "new_vendor_val");
-    };
-    
+    };    
 }
 
 int
 start_goose_receiver(void* arguments)
 {
     Arg_pack* args = arguments; 
-    //printf("args MemAddr: %p \n", args);
-    iedServer = IedServer_create(&iedModel);
     char* ethernetIfcID = NULL;
-
-        ethernetIfcID = args->interface;
-    
+    ethernetIfcID = args->interface;    
     GooseReceiver receiver = GooseReceiver_create();
-    //printf("GOOSE Receiver MemAddr: %p \n", &receiver);
-
     printf("GOOSE RECEIVER Using interface %s\n", ethernetIfcID);
     GooseReceiver_setInterfaceId(receiver, ethernetIfcID);
     
-    //Make sure APPID from publisher or data model matches that of subscribers!
+    /* Get gocbrefs from args*/
+    GooseSubscribers goose_subscribers;
+    goose_subscribers.subscribers = LinkedList_create();
+    GooseSubscriber tmp_subscriber;
+    int no_of_gocbref = LinkedList_size(args->go_cb_refs);
     
-    GooseSubscriber event_subscriber = GooseSubscriber_create("PDEVLDEV/LLN0$GO$gse01", NULL);
-    GooseSubscriber_setAppId(event_subscriber, 4096);
-    GooseSubscriber_setListener(event_subscriber, gooseListener, NULL);   
-    GooseReceiver_addSubscriber(receiver, event_subscriber);
     
-    GooseSubscriber subscriber = GooseSubscriber_create("PDEVLDEV/LLN0$GO$mygocb", NULL);
-    GooseSubscriber_setAppId(subscriber, 4096);
-    GooseSubscriber_setListener(subscriber, gooseExampleListener, NULL);
-    GooseReceiver_addSubscriber(receiver, subscriber);
-
+    for(int i=0; i < no_of_gocbref; i++){        
+        char* current_gocbref = LinkedList_getData(LinkedList_get(args->go_cb_refs, i)); 
+        tmp_subscriber = GooseSubscriber_create(current_gocbref, NULL);
+        //Check APPID from publisher matches subscribers!  
+        GooseSubscriber_setAppId(tmp_subscriber, args->goose_appid);
+        GooseSubscriber_setListener(tmp_subscriber, gooseListener, current_gocbref);
+        GooseReceiver_addSubscriber(receiver, tmp_subscriber);
+        LinkedList_add(goose_subscribers.subscribers,tmp_subscriber);
+    }
+    
     GooseReceiver_start(receiver);
-
     running = 1;
     signal(SIGINT, goose_in_sigint_handler);
-
     while (running) {
         Thread_sleep(100);
     }
-
     GooseReceiver_stop(receiver);
-
     GooseReceiver_destroy(receiver);
 }
