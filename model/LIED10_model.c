@@ -1443,7 +1443,7 @@ DataAttribute iedModel_PROT_PIOC_Op_general = {
     0,
     IEC61850_FC_ST,
     IEC61850_BOOLEAN,
-    0,
+    0 + TRG_OPT_DATA_UPDATE,
     NULL,
     0};
 
@@ -7277,9 +7277,12 @@ DataAttribute iedModel_MEAS_MMXU_NamPlt_configRev = {
 extern GSEControlBlock iedModel_CTRL_LLN0_gse0;
 extern GSEControlBlock iedModel_PROT_LLN0_gse0;
 extern GSEControlBlock iedModel_MEAS_LLN0_gse0;
-GSEControlBlock iedModel_CTRL_LLN0_gse0 = {&iedModel_CTRL_LLN0, "Status", "LIED10/CTRL/LLN0/Status", "Status", 10002, false, NULL, -1, -1, &iedModel_PROT_LLN0_gse0};
-GSEControlBlock iedModel_PROT_LLN0_gse0 = {&iedModel_PROT_LLN0, "Alarm", "LIED10/PROT/LLN0/Alarm", "Alarm", 10002, false, NULL, -1, -1, &iedModel_MEAS_LLN0_gse0};
-GSEControlBlock iedModel_MEAS_LLN0_gse0 = {&iedModel_MEAS_LLN0, "Meas", "LIED10/MEAS/LLN0/Meas", "Meas", 10002, false, NULL, -1, -1, NULL};
+PhyComAddress p1 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+PhyComAddress p2 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+PhyComAddress p3 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+GSEControlBlock iedModel_CTRL_LLN0_gse0 = {&iedModel_CTRL_LLN0, "Status", "LIED10/CTRL/LLN0/Status", "Status", 10002, false, &p1, -1, -1, &iedModel_PROT_LLN0_gse0};
+GSEControlBlock iedModel_PROT_LLN0_gse0 = {&iedModel_PROT_LLN0, "Alarm", "LIED10/PROT/LLN0/Alarm", "Alarm", 10002, false, &p2, -1, -1, &iedModel_MEAS_LLN0_gse0};
+GSEControlBlock iedModel_MEAS_LLN0_gse0 = {&iedModel_MEAS_LLN0, "Meas", "LIED10/MEAS/LLN0/Meas", "Meas", 10002, false, &p3, -1, -1, NULL};
 
 extern SettingGroupControlBlock iedModel_PROT_LLN0_sgcb;
 

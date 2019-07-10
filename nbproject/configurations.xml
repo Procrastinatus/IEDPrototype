@@ -16,6 +16,16 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f2"
+                     displayName="Controller (Logical Folder)"
+                     projectFiles="true">
+        <itemPath>controller/measurement_controller.c</itemPath>
+        <itemPath>controller/measurement_controller.h</itemPath>
+        <itemPath>controller/protection_controller.c</itemPath>
+        <itemPath>controller/protection_controller.h</itemPath>
+        <itemPath>controller/status_controller.c</itemPath>
+        <itemPath>controller/status_controller.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1"
                      displayName="Model (Logical Folder)"
                      projectFiles="true">
@@ -91,11 +101,27 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="controller/measurement_controller.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="controller/measurement_controller.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="controller/protection_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/protection_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/status_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/status_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="goose_in.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="goose_in.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="goose_out.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="goose_out.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -151,6 +177,24 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="controller/measurement_controller.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="controller/measurement_controller.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="controller/protection_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/protection_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/status_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/status_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="goose_in.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="goose_in.h" ex="false" tool="3" flavor2="0">

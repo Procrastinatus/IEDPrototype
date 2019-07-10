@@ -19,7 +19,7 @@
 #include "iec61850_server.h"
 #include "model/custom_structs.h"
 
-extern IedServer iedServer;
+IedServer iedServer;
 void mms_server_module_handler(int signalId);
 void controlHandlerForBinaryOutput(void* parameter, MmsValue* value);
 static MmsDataAccessError writeAccessHandler (DataAttribute* dataAttribute, MmsValue* value, ClientConnection connection, void* parameter);

@@ -47,7 +47,7 @@ void main_sigint_handler(int dummy) {
 int
 main(int argc, char** argv) {
     printf("Usage: -p <port> -i <interface> -z <GOOSE_APPID> [-x <gocbRef>] -c <SV_APPID> \n");
-    printf("e.g. ./iedprototype -p 102 -i lo -z 4096 -x LIED10CTRL/LLN0\$GO\$Status -x LIED10PROT/LLN0\$GO\$Alarm -x LIED10MEAS/LLN0\$GO\$Meas -c 4096 \n");
+    printf("e.g. ./iedprototype -p 102 -i lo -z 4096 -x LIED10CTRL/LLN0\$GO\$Status -x LIED10PROT/LLN0\$GO\$Alarm -x LIED10MEAS/LLN0\$GO\$Meas -c 4000 \n");
     //printf("The -n flag is simply for distinguishing IEDs, i.e. the physical device name will change. \n");
     printf("Try escaping the $ signs with a backslash if you can't subscribe to the GOOSE packet(s). \n");
     printf("-z, -x, -c, are identifiers for LISTENING (e.g. listen for GOOSE pkts with AppID=4096)\n\n");
@@ -93,7 +93,7 @@ main(int argc, char** argv) {
             }
             case 'c':{
                 /* This is for SV APPID */
-                args.sv_appid = atoi(optarg);
+                args.sv_appid = strtol(optarg, NULL, 16);
                 break;
             }
             

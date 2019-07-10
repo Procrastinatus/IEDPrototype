@@ -19,7 +19,9 @@ build/Debug/GNU-Linux/goose_in.o: goose_in.c \
  .install/include/iec61850_model.h .install/include/iec61850_cdc.h \
  .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
- .install/include/mms_value.h
+ .install/include/mms_value.h controller/status_controller.h \
+ controller/../mms_server_module.h controller/protection_controller.h \
+ controller/measurement_controller.h
 
 .install/include/goose_receiver.h:
 
@@ -92,3 +94,11 @@ mms_server_module.h:
 .install/include/iec61850_config_file_parser.h:
 
 .install/include/mms_value.h:
+
+controller/status_controller.h:
+
+controller/../mms_server_module.h:
+
+controller/protection_controller.h:
+
+controller/measurement_controller.h:

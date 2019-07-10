@@ -12,6 +12,10 @@
 #include "mms_server_module.h"
 #include "mms_value.h"
 
+#include "controller/status_controller.h"
+#include "controller/protection_controller.h"
+#include "controller/measurement_controller.h"
+
 /* import IEC 61850 device mod */
 extern IedModel iedModel;
 extern IedServer iedServer;
@@ -29,6 +33,7 @@ void goose_in_sigint_handler(int signalId)
 void
 gooseListener(GooseSubscriber subscriber, void* parameter)
 {
+    /* Note that parameter is currently just a char* of the gocbRef */
     printf("=====\nGOCBREF Found: %s \n",(char*)parameter);
     printf("GOOSE vendor event:\n");
     printf("  stNum: %u sqNum: %u\n", GooseSubscriber_getStNum(subscriber),
@@ -40,23 +45,13 @@ gooseListener(GooseSubscriber subscriber, void* parameter)
     char buffer[1024];
     MmsValue_printToBuffer(values, buffer, 1024);
     printf("GOOSE values : %s\n", buffer);
+    //printf("This dataset is of MMSTYPE: %i \n", MmsValue_getType(values));
     
-    /* TODO Logic for handling incoming GOOSE messages (differs with each IED?) */
-    if(strcmp("LIED10CTRL/LLN0$GO$Status",parameter) == 0){
-        
-    }
-    if(strcmp("LIED10PROT/LLN0$GO$Alarm",parameter) == 0){
-        
-    }
-    if(strcmp("LIED10MEAS/LLN0$GO$Meas",parameter) == 0){
-        //new_vals.new_val += 1.0f;
-    }   
-    
-    //TODO stNum not increasing even with changed value, what condition to modify data model?
-    if (GooseSubscriber_getSqNum(subscriber)==0 && GooseSubscriber_getStNum(subscriber)>1){
-        printf("stNum increased, sqNum reset, Attempting to change some data attribute...\n");
-        printf("Changing HARD-CODED DA (Data Attr.): LLN0_NamPlt_vendor \n");
-    };    
+    /* Callback controllers for received GOOSE data
+       Filtering of gocb(s) done in each controller */
+    //status_controller_main((char*)parameter, values);
+    mx_controller_main((char*)parameter, values);
+    protection_controller_main((char*)parameter, values);
 }
 
 int

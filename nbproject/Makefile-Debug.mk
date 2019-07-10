@@ -35,8 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/controller/measurement_controller.o \
+	${OBJECTDIR}/controller/protection_controller.o \
+	${OBJECTDIR}/controller/status_controller.o \
 	${OBJECTDIR}/goose_in.o \
-	${OBJECTDIR}/goose_out.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mms_server_module.o \
 	${OBJECTDIR}/model/LIED10_model.o \
@@ -70,15 +72,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/controller/measurement_controller.o: controller/measurement_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/measurement_controller.o controller/measurement_controller.c
+
+${OBJECTDIR}/controller/protection_controller.o: controller/protection_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/protection_controller.o controller/protection_controller.c
+
+${OBJECTDIR}/controller/status_controller.o: controller/status_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/status_controller.o controller/status_controller.c
+
 ${OBJECTDIR}/goose_in.o: goose_in.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_in.o goose_in.c
-
-${OBJECTDIR}/goose_out.o: goose_out.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_out.o goose_out.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
