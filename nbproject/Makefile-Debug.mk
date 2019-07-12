@@ -35,12 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/controller/measurement_controller.o \
-	${OBJECTDIR}/controller/protection_controller.o \
-	${OBJECTDIR}/controller/status_controller.o \
+	${OBJECTDIR}/controller/ctrl_controller.o \
+	${OBJECTDIR}/controller/meas_controller.o \
+	${OBJECTDIR}/controller/overcurrent_controller.o \
+	${OBJECTDIR}/controller/prot_controller.o \
 	${OBJECTDIR}/goose_in.o \
+	${OBJECTDIR}/ied_server.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/mms_server_module.o \
 	${OBJECTDIR}/model/LIED10_model.o \
 	${OBJECTDIR}/model/dynamic_model.o \
 	${OBJECTDIR}/sv_in.o
@@ -70,52 +71,57 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: .install/lib/libiec6185
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype ${OBJECTFILES} ${LDLIBSOPTIONS} -lm
 
-${OBJECTDIR}/controller/measurement_controller.o: controller/measurement_controller.c
+${OBJECTDIR}/controller/ctrl_controller.o: controller/ctrl_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/measurement_controller.o controller/measurement_controller.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/ctrl_controller.o controller/ctrl_controller.c
 
-${OBJECTDIR}/controller/protection_controller.o: controller/protection_controller.c
+${OBJECTDIR}/controller/meas_controller.o: controller/meas_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/protection_controller.o controller/protection_controller.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/meas_controller.o controller/meas_controller.c
 
-${OBJECTDIR}/controller/status_controller.o: controller/status_controller.c
+${OBJECTDIR}/controller/overcurrent_controller.o: controller/overcurrent_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/status_controller.o controller/status_controller.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/overcurrent_controller.o controller/overcurrent_controller.c
+
+${OBJECTDIR}/controller/prot_controller.o: controller/prot_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/prot_controller.o controller/prot_controller.c
 
 ${OBJECTDIR}/goose_in.o: goose_in.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_in.o goose_in.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_in.o goose_in.c
+
+${OBJECTDIR}/ied_server.o: ied_server.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ied_server.o ied_server.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
-
-${OBJECTDIR}/mms_server_module.o: mms_server_module.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mms_server_module.o mms_server_module.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/model/LIED10_model.o: model/LIED10_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/LIED10_model.o model/LIED10_model.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/LIED10_model.o model/LIED10_model.c
 
 ${OBJECTDIR}/model/dynamic_model.o: model/dynamic_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/dynamic_model.o model/dynamic_model.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/dynamic_model.o model/dynamic_model.c
 
 ${OBJECTDIR}/sv_in.o: sv_in.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sv_in.o sv_in.c
+	$(COMPILE.c) -g -I.install/include -I.install/hal/inc -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sv_in.o sv_in.c
 
 # Subprojects
 .build-subprojects:

@@ -5,8 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>goose_in.h</itemPath>
-      <itemPath>goose_out.h</itemPath>
-      <itemPath>mms_server_module.h</itemPath>
+      <itemPath>ied_server.h</itemPath>
       <itemPath>sv_in.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -19,12 +18,14 @@
       <logicalFolder name="f2"
                      displayName="Controller (Logical Folder)"
                      projectFiles="true">
-        <itemPath>controller/measurement_controller.c</itemPath>
-        <itemPath>controller/measurement_controller.h</itemPath>
-        <itemPath>controller/protection_controller.c</itemPath>
-        <itemPath>controller/protection_controller.h</itemPath>
-        <itemPath>controller/status_controller.c</itemPath>
-        <itemPath>controller/status_controller.h</itemPath>
+        <itemPath>controller/ctrl_controller.c</itemPath>
+        <itemPath>controller/ctrl_controller.h</itemPath>
+        <itemPath>controller/meas_controller.c</itemPath>
+        <itemPath>controller/meas_controller.h</itemPath>
+        <itemPath>controller/overcurrent_controller.c</itemPath>
+        <itemPath>controller/overcurrent_controller.h</itemPath>
+        <itemPath>controller/prot_controller.c</itemPath>
+        <itemPath>controller/prot_controller.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="Model (Logical Folder)"
@@ -43,18 +44,11 @@
           <itemPath>model/custom_structs.h</itemPath>
           <itemPath>model/dynamic_model.c</itemPath>
           <itemPath>model/dynamic_model.h</itemPath>
-          <itemPath>model/static_model.c</itemPath>
-          <itemPath>model/static_model.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3"
-                     displayName="View (Logical Folder)"
-                     projectFiles="true">
-      </logicalFolder>
       <itemPath>goose_in.c</itemPath>
-      <itemPath>goose_out.c</itemPath>
+      <itemPath>ied_server.c</itemPath>
       <itemPath>main.c</itemPath>
-      <itemPath>mms_server_module.c</itemPath>
       <itemPath>sv_in.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -82,6 +76,7 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <standard>10</standard>
           <commandlineTool>gcc</commandlineTool>
           <incDir>
             <pElem>.install/include</pElem>
@@ -99,37 +94,40 @@
           <linkerLibItems>
             <linkerLibFileItem>.install/lib/libiec61850.a</linkerLibFileItem>
           </linkerLibItems>
+          <commandLine>-lm</commandLine>
         </linkerTool>
       </compileType>
-      <item path="controller/measurement_controller.c"
+      <item path="controller/ctrl_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/ctrl_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/meas_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/meas_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/overcurrent_controller.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="controller/measurement_controller.h"
+      <item path="controller/overcurrent_controller.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="controller/protection_controller.c" ex="false" tool="0" flavor2="0">
+      <item path="controller/prot_controller.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="controller/protection_controller.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="controller/status_controller.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="controller/status_controller.h" ex="false" tool="3" flavor2="0">
+      <item path="controller/prot_controller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="goose_in.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="goose_in.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="goose_out.h" ex="false" tool="3" flavor2="0">
+      <item path="ied_server.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ied_server.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mms_server_module.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mms_server_module.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="model/LIED10_model.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -177,37 +175,37 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="controller/measurement_controller.c"
+      <item path="controller/ctrl_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/ctrl_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/meas_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/meas_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controller/overcurrent_controller.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="controller/measurement_controller.h"
+      <item path="controller/overcurrent_controller.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="controller/protection_controller.c" ex="false" tool="0" flavor2="0">
+      <item path="controller/prot_controller.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="controller/protection_controller.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="controller/status_controller.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="controller/status_controller.h" ex="false" tool="3" flavor2="0">
+      <item path="controller/prot_controller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="goose_in.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="goose_in.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="goose_out.c" ex="false" tool="0" flavor2="0">
+      <item path="ied_server.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="goose_out.h" ex="false" tool="3" flavor2="0">
+      <item path="ied_server.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mms_server_module.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mms_server_module.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="model/BIED100_model.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -234,10 +232,6 @@
       <item path="model/dynamic_model.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="model/dynamic_model.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="model/static_model.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="model/static_model.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="sv_in.c" ex="false" tool="0" flavor2="0">
       </item>

@@ -9,8 +9,8 @@ build/Debug/GNU-Linux/main.o: main.c .install/include/mms_value.h \
  .install/include/goose_subscriber.h .install/include/goose_subscriber.h \
  model/custom_structs.h .install/include/linked_list.h sv_in.h \
  .install/include/sv_subscriber.h .install/include/iec61850_common.h \
- .install/include/logging_api.h controller/measurement_controller.h \
- controller/../mms_server_module.h controller/../model/LIED10_model.h \
+ .install/include/logging_api.h controller/meas_controller.h \
+ controller/../ied_server.h controller/../model/LIED10_model.h \
  .install/include/iec61850_model.h .install/include/iec61850_server.h \
  .install/include/mms_server.h .install/include/mms_device_model.h \
  .install/include/mms_type_spec.h \
@@ -21,9 +21,10 @@ build/Debug/GNU-Linux/main.o: main.c .install/include/mms_value.h \
  .install/include/iec61850_model.h .install/include/iec61850_cdc.h \
  .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
- controller/../model/custom_structs.h controller/protection_controller.h \
- model/static_model.h model/dynamic_model.h model/custom_structs.h \
- mms_server_module.h
+ controller/../model/custom_structs.h controller/prot_controller.h \
+ controller/overcurrent_controller.h controller/prot_controller.h \
+ controller/meas_controller.h controller/ctrl_controller.h \
+ model/dynamic_model.h model/custom_structs.h ied_server.h
 
 .install/include/mms_value.h:
 
@@ -69,9 +70,9 @@ sv_in.h:
 
 .install/include/logging_api.h:
 
-controller/measurement_controller.h:
+controller/meas_controller.h:
 
-controller/../mms_server_module.h:
+controller/../ied_server.h:
 
 controller/../model/LIED10_model.h:
 
@@ -107,12 +108,18 @@ controller/../model/LIED10_model.h:
 
 controller/../model/custom_structs.h:
 
-controller/protection_controller.h:
+controller/prot_controller.h:
 
-model/static_model.h:
+controller/overcurrent_controller.h:
+
+controller/prot_controller.h:
+
+controller/meas_controller.h:
+
+controller/ctrl_controller.h:
 
 model/dynamic_model.h:
 
 model/custom_structs.h:
 
-mms_server_module.h:
+ied_server.h:

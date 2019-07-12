@@ -1443,7 +1443,7 @@ DataAttribute iedModel_PROT_PIOC_Op_general = {
     0,
     IEC61850_FC_ST,
     IEC61850_BOOLEAN,
-    0 + TRG_OPT_DATA_UPDATE,
+    0,
     NULL,
     0};
 
@@ -3202,7 +3202,7 @@ DataAttribute iedModel_MEAS_MMXU_PhV_phsA_instCVal_mag_f = {
     0,
     IEC61850_FC_MX,
     IEC61850_FLOAT32,
-    0,
+    0 ,
     NULL,
     0};
 

@@ -43,12 +43,18 @@ main(int argc, char** argv)
 
     SVPublisher_setupComplete(svPublisher);
 
-    float fVal1 = 1234.5678f;
-    float fVal2 = 0.12345f;
-    float fVal3 = 333.333f;
-    float fVal4 = 4444.4444f;
-    float fVal5 = 555.555f;
-    float fVal6 = 6666.6666f;
+    float fVal1 = 500.0f;
+    float fVal2 = 450.0f;
+    float fVal3 = 550.0f;
+    float fVal4 = 10.0f;
+    float fVal5 = 9.5f;
+    float fVal6 = 10.5f;
+    bool fVal1_inc = true;
+    bool fVal2_inc = true;
+    bool fVal3_inc = true;
+    bool fVal4_inc = true;
+    bool fVal5_inc = true;
+    bool fVal6_inc = true;
 
     while (running) {
         Timestamp ts;
@@ -66,16 +72,34 @@ main(int argc, char** argv)
 
         SVPublisher_ASDU_increaseSmpCnt(asdu1);
 
-        fVal1 += 1.1f;
-        fVal2 += 0.1f;
-        fVal3 += 1.1f;
-        fVal4 += 0.1f;
-        fVal5 += 1.1f;
-        fVal6 += 0.1f;
+	if(fVal1>=600.0f){fVal1_inc = false;}
+	if(fVal1<=400.0f){fVal1_inc = true;}
+	if(!fVal1_inc){fVal1 -= 1.1f;} else {fVal1 += 1.1f;}
+
+	if(fVal2>=600.0f){fVal2_inc = false;}
+	if(fVal2<=400.0f){fVal2_inc = true;}
+	if(!fVal2_inc){fVal1 -= 2.1f;} else {fVal2 += 2.1f;}
+
+	if(fVal3>=600.0f){fVal3_inc = false;}
+	if(fVal3<=400.0f){fVal3_inc = true;}
+	if(!fVal3_inc){fVal3 -= 3.1f;} else {fVal3 += 3.1f;}
+
+	/* NOTE For voltages we remove 3 zeros (KILOvolt) because of float limits */
+	if(fVal4>=11.0f){fVal4_inc = false;}
+	if(fVal4<=9.0f){fVal4_inc = true;}
+	if(!fVal4_inc){fVal4 -= 0.11f;} else {fVal4 += 0.11f;}
+
+	if(fVal5>=11.0f){fVal5_inc = false;}
+	if(fVal5<=9.0f){fVal5_inc = true;}
+	if(!fVal5_inc){fVal5 -= 0.21f;} else {fVal5 += 0.21f;}
+
+	if(fVal6>=11.0f){fVal6_inc = false;}
+	if(fVal6<=9.0f){fVal6_inc = true;}
+	if(!fVal6_inc){fVal6 -= 0.31f;} else {fVal6 += 0.31f;}
 
         SVPublisher_publish(svPublisher);
 
-        Thread_sleep(50);
+        Thread_sleep(100);
     }
 
     SVPublisher_destroy(svPublisher);

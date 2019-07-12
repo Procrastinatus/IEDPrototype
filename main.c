@@ -32,9 +32,8 @@
 #include "sv_in.h"
 
 // These two are for MMS server module
-#include "model/static_model.h"
 #include "model/dynamic_model.h"
-#include "mms_server_module.h"
+#include "ied_server.h"
 
 #include "model/custom_structs.h"
 
@@ -72,7 +71,7 @@ main(int argc, char** argv) {
                 break;
             }
             case 'n':{
-                //n may still be used for differentiating IED names
+                //n may still be used for differentiating IED names (dynamic model)
                 //args.n = atoi(optarg);
                 break;
             }
@@ -117,29 +116,33 @@ main(int argc, char** argv) {
         }
     }
 
-    for(; optind < argc; optind++){      
-        //printf("extra arguments/gocbrefs: %s\n", argv[optind]); 
-        //LinkedList_add(args.go_cb_refs, argv[optind]);
+    for(; optind < argc; optind++){
+        //Do something if using extra options
     } 
 
-    for(int i=0; i< LinkedList_size(args.go_cb_refs); i++){      
-        //printf("Found gocbrefs: %s\n", (char*)LinkedList_getData(LinkedList_get(args.go_cb_refs, i))); 
+    /*
+    for(int i=0; i< LinkedList_size(args.go_cb_refs); i++){
+        printf("Found gocbrefs: %s\n", (char*)LinkedList_getData(LinkedList_get(args.go_cb_refs, i))); 
     } 
+    */
     
     printf("Starting port is %d, interface is %s \n", args.start_port, args.interface);
     printf("GOOSE AppID is %i\n",args.goose_appid);
-    printf("SV AppID is %i\n",args.sv_appid);
+    printf("SV AppID is 0x%x\n",args.sv_appid);
 
     pthread_t goose_receiver_thread, mms_server_thread, sv_receiver_thread;
     int goose_recv_thread_id, ied_server_thread_id, sv_recv_thread_id;
 
+    /* Start GOOSE Receiver */
     goose_recv_thread_id = pthread_create(&goose_receiver_thread, NULL, start_goose_receiver, (void*)&args); 
-    ied_server_thread_id = pthread_create(&mms_server_thread, NULL, start_static_ied_server, (void*)&args); 
-    sv_recv_thread_id = pthread_create(&sv_receiver_thread, NULL, start_sv_receiver, (void*)&args); 
-    sleep(1000);
-
-    pthread_join(mms_server_thread, NULL); 
     
+    /* IED Server = (MMS Server + GOOSE Publisher) Bundle */
+    ied_server_thread_id = pthread_create(&mms_server_thread, NULL, start_static_ied_server, (void*)&args); 
+    
+    /* Start SV Receiver */
+    sv_recv_thread_id = pthread_create(&sv_receiver_thread, NULL, start_sv_receiver, (void*)&args); 
+    
+    pthread_join(mms_server_thread, NULL);     
     printf("Reached main exit\n");
     return (0);
 }

@@ -9,7 +9,7 @@ build/Debug/GNU-Linux/goose_in.o: goose_in.c \
  goose_in.h model/custom_structs.h .install/include/linked_list.h \
  model/LIED10_model.h .install/include/iec61850_model.h \
  .install/include/iec61850_common.h .install/include/logging_api.h \
- mms_server_module.h .install/include/iec61850_server.h \
+ ied_server.h .install/include/iec61850_server.h \
  .install/include/mms_server.h .install/include/mms_device_model.h \
  .install/include/mms_type_spec.h .install/include/linked_list.h \
  .install/include/mms_named_variable_list.h .install/include/iso_server.h \
@@ -19,9 +19,9 @@ build/Debug/GNU-Linux/goose_in.o: goose_in.c \
  .install/include/iec61850_model.h .install/include/iec61850_cdc.h \
  .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
- .install/include/mms_value.h controller/status_controller.h \
- controller/../mms_server_module.h controller/protection_controller.h \
- controller/measurement_controller.h
+ .install/include/mms_value.h controller/ctrl_controller.h \
+ controller/../ied_server.h controller/prot_controller.h \
+ controller/meas_controller.h
 
 .install/include/goose_receiver.h:
 
@@ -61,7 +61,7 @@ model/LIED10_model.h:
 
 .install/include/logging_api.h:
 
-mms_server_module.h:
+ied_server.h:
 
 .install/include/iec61850_server.h:
 
@@ -95,10 +95,10 @@ mms_server_module.h:
 
 .install/include/mms_value.h:
 
-controller/status_controller.h:
+controller/ctrl_controller.h:
 
-controller/../mms_server_module.h:
+controller/../ied_server.h:
 
-controller/protection_controller.h:
+controller/prot_controller.h:
 
-controller/measurement_controller.h:
+controller/meas_controller.h:

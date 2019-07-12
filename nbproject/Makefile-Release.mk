@@ -35,20 +35,19 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/controller/measurement_controller.o \
-	${OBJECTDIR}/controller/protection_controller.o \
-	${OBJECTDIR}/controller/status_controller.o \
+	${OBJECTDIR}/controller/ctrl_controller.o \
+	${OBJECTDIR}/controller/meas_controller.o \
+	${OBJECTDIR}/controller/overcurrent_controller.o \
+	${OBJECTDIR}/controller/prot_controller.o \
 	${OBJECTDIR}/goose_in.o \
-	${OBJECTDIR}/goose_out.o \
+	${OBJECTDIR}/ied_server.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/mms_server_module.o \
 	${OBJECTDIR}/model/BIED100_model.o \
 	${OBJECTDIR}/model/LIED10_model.o \
 	${OBJECTDIR}/model/LIED11_model.o \
 	${OBJECTDIR}/model/TIED13_model.o \
 	${OBJECTDIR}/model/UFIED_model.o \
 	${OBJECTDIR}/model/dynamic_model.o \
-	${OBJECTDIR}/model/static_model.o \
 	${OBJECTDIR}/sv_in.o
 
 
@@ -78,40 +77,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/controller/measurement_controller.o: controller/measurement_controller.c
+${OBJECTDIR}/controller/ctrl_controller.o: controller/ctrl_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/measurement_controller.o controller/measurement_controller.c
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/ctrl_controller.o controller/ctrl_controller.c
 
-${OBJECTDIR}/controller/protection_controller.o: controller/protection_controller.c
+${OBJECTDIR}/controller/meas_controller.o: controller/meas_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/protection_controller.o controller/protection_controller.c
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/meas_controller.o controller/meas_controller.c
 
-${OBJECTDIR}/controller/status_controller.o: controller/status_controller.c
+${OBJECTDIR}/controller/overcurrent_controller.o: controller/overcurrent_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/status_controller.o controller/status_controller.c
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/overcurrent_controller.o controller/overcurrent_controller.c
+
+${OBJECTDIR}/controller/prot_controller.o: controller/prot_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/prot_controller.o controller/prot_controller.c
 
 ${OBJECTDIR}/goose_in.o: goose_in.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_in.o goose_in.c
 
-${OBJECTDIR}/goose_out.o: goose_out.c
+${OBJECTDIR}/ied_server.o: ied_server.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/goose_out.o goose_out.c
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ied_server.o ied_server.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
-
-${OBJECTDIR}/mms_server_module.o: mms_server_module.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mms_server_module.o mms_server_module.c
 
 ${OBJECTDIR}/model/BIED100_model.o: model/BIED100_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
@@ -142,11 +141,6 @@ ${OBJECTDIR}/model/dynamic_model.o: model/dynamic_model.c
 	${MKDIR} -p ${OBJECTDIR}/model
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/dynamic_model.o model/dynamic_model.c
-
-${OBJECTDIR}/model/static_model.o: model/static_model.c
-	${MKDIR} -p ${OBJECTDIR}/model
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/model/static_model.o model/static_model.c
 
 ${OBJECTDIR}/sv_in.o: sv_in.c
 	${MKDIR} -p ${OBJECTDIR}

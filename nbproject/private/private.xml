@@ -7,19 +7,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/measurement_controller.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/status_controller.h</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/controller/overcurrent_controller.c</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/controller/prot_controller.c</file>
             <file>file:/home/adsc/Desktop/IEDPrototype/goose_in.c</file>
             <file>file:/home/adsc/Desktop/IEDPrototype/main.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/mms_server_module.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/measurement_controller.h</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/status_crontroller.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/protection_controller.h</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/controller/protection_controller.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/goose_out.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/.install/include/mms_value.h</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/model/LIED10_model.c</file>
-            <file>file:/home/adsc/Desktop/IEDPrototype/model/LIED10_model.h</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/controller/ctrl_controller.c</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/sv_in.c</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/controller/meas_controller.h</file>
+            <file>file:/home/adsc/Desktop/IEDPrototype/controller/meas_controller.c</file>
         </group>
     </open-files>
 </project-private>

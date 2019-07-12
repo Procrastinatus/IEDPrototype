@@ -38,16 +38,30 @@ svUpdateListener(SVSubscriber subscriber, void* parameter, SVSubscriber_ASDU asd
          * data block of the SV message before accessing the data.
          */
         if (SVSubscriber_ASDU_getDataSize(asdu) >= 24) {
-            //printf("   DATA[0]: %f\n", SVSubscriber_ASDU_getFLOAT32(asdu, 0));
-            //printf("   DATA[1]: %f\n", SVSubscriber_ASDU_getFLOAT32(asdu, 4));
-            //printf("   DATA[2]: %f\n", SVSubscriber_ASDU_getFLOAT32(asdu, 8));
-            //printf("   DATA[3]: %f\n", SVSubscriber_ASDU_getFLOAT32(asdu, 12));
+            //printf("   DATA[0]: %f      ", SVSubscriber_ASDU_getFLOAT32(asdu, 0));
+            //printf("   DATA[1]: %f      ", SVSubscriber_ASDU_getFLOAT32(asdu, 4));
+            //printf("   DATA[2]: %f      ", SVSubscriber_ASDU_getFLOAT32(asdu, 8));
+            //printf("   DATA[3]: %f      ", SVSubscriber_ASDU_getFLOAT32(asdu, 12));
+            //printf("   DATA[4]: %f      ", SVSubscriber_ASDU_getFLOAT32(asdu, 16));
+            //printf("   DATA[5]: %f\n", SVSubscriber_ASDU_getFLOAT32(asdu, 20));
+            
             float received_sv_vals[6];
             for (int i = 0; i < 6; i++) {
                 received_sv_vals[i] = SVSubscriber_ASDU_getFLOAT32(asdu, 4 * i);
             }
-            sv_update_mx_values(received_sv_vals);
-            sv_raise_alarm(received_sv_vals);
+            
+            /* Update Data Model */
+            /* Second argument is the length (no. of ele) of the array */
+            sv_update_meas_values(received_sv_vals, 6);
+            
+            /* Store latest N sampled values for determining if OC has occurred */
+            /* First float is current, second float is voltage */
+            /* Store phsA values */
+            /* For now assume ballpark current of 500A and voltage of 10(KILO)V*/
+            store_sampled_value(received_sv_vals[0], received_sv_vals[3]);
+            
+            /* Check if there is OC */
+            overcurrent_controller_main();
         }
 
 }
@@ -62,7 +76,6 @@ start_sv_receiver(void* arguments) {
     SVReceiver_setInterfaceId(receiver, ethernetIfcID);
 
     /* Create a subscriber listening to SV messages with APPID 4000h */
-    //SVSubscriber subscriber = SVSubscriber_create(NULL, 0x4000);
     SVSubscriber subscriber = SVSubscriber_create(NULL, args->sv_appid);
 
     /* Install a callback handler for the subscriber */

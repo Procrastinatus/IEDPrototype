@@ -20,8 +20,9 @@ extern "C" {
 
 #include "model/custom_structs.h"
 #include "sv_subscriber.h"
-#include "controller/measurement_controller.h"
-#include "controller/protection_controller.h"
+#include "controller/meas_controller.h"
+#include "controller/prot_controller.h"
+#include "controller/overcurrent_controller.h"
     
 void sv_in_sigint_handler(int signalId);
 static void svUpdateListener (SVSubscriber subscriber, void* parameter, SVSubscriber_ASDU asdu);

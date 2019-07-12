@@ -9,16 +9,15 @@
 #include "goose_in.h"
 //#include "model/static_model.h"
 #include "model/LIED10_model.h"
-#include "mms_server_module.h"
+#include "ied_server.h"
 #include "mms_value.h"
 
-#include "controller/status_controller.h"
-#include "controller/protection_controller.h"
-#include "controller/measurement_controller.h"
+#include "controller/ctrl_controller.h"
+#include "controller/prot_controller.h"
+#include "controller/meas_controller.h"
 
 /* import IEC 61850 device mod */
 extern IedModel iedModel;
-extern IedServer iedServer;
 
 //For static model LIED10_model
 Received_goose_data new_vals;
@@ -47,11 +46,7 @@ gooseListener(GooseSubscriber subscriber, void* parameter)
     printf("GOOSE values : %s\n", buffer);
     //printf("This dataset is of MMSTYPE: %i \n", MmsValue_getType(values));
     
-    /* Callback controllers for received GOOSE data
-       Filtering of gocb(s) done in each controller */
-    //status_controller_main((char*)parameter, values);
-    mx_controller_main((char*)parameter, values);
-    protection_controller_main((char*)parameter, values);
+    /* Callback controllers for received GOOSE data */
 }
 
 int
