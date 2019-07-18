@@ -18,6 +18,8 @@
       <logicalFolder name="f2"
                      displayName="Controller (Logical Folder)"
                      projectFiles="true">
+        <itemPath>controller/cb_failure_controller.c</itemPath>
+        <itemPath>controller/cb_failure_controller.h</itemPath>
         <itemPath>controller/ctrl_controller.c</itemPath>
         <itemPath>controller/ctrl_controller.h</itemPath>
         <itemPath>controller/meas_controller.c</itemPath>
@@ -97,6 +99,10 @@
           <commandLine>-lm</commandLine>
         </linkerTool>
       </compileType>
+      <item path="controller/cb_failure_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/cb_failure_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="controller/ctrl_controller.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="controller/ctrl_controller.h" ex="false" tool="3" flavor2="0">
@@ -175,6 +181,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="controller/cb_failure_controller.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="controller/cb_failure_controller.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="controller/ctrl_controller.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="controller/ctrl_controller.h" ex="false" tool="3" flavor2="0">

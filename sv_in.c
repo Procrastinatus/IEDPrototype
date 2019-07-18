@@ -20,6 +20,7 @@ void sv_in_sigint_handler(int signalId) {
 /* Callback handler for received SV messages */
 static void
 svUpdateListener(SVSubscriber subscriber, void* parameter, SVSubscriber_ASDU asdu) {
+    Arg_pack* args = parameter;
     //printf("svUpdateListener called\n");
     const char* svID = SVSubscriber_ASDU_getSvId(asdu);
     if (svID != NULL)
@@ -61,7 +62,7 @@ svUpdateListener(SVSubscriber subscriber, void* parameter, SVSubscriber_ASDU asd
             store_sampled_value(received_sv_vals[0], received_sv_vals[3]);
             
             /* Check if there is OC */
-            overcurrent_controller_main();
+            overcurrent_controller_main(args->cb_fail);
         }
 
 }
@@ -76,10 +77,11 @@ start_sv_receiver(void* arguments) {
     SVReceiver_setInterfaceId(receiver, ethernetIfcID);
 
     /* Create a subscriber listening to SV messages with APPID 4000h */
-    SVSubscriber subscriber = SVSubscriber_create(NULL, args->sv_appid);
+    SVSubscriber subscriber = SVSubscriber_create(NULL, args->sv_in_appid);
 
     /* Install a callback handler for the subscriber */
-    SVSubscriber_setListener(subscriber, svUpdateListener, NULL);
+    /* For arguments being passed, we currently use args.cb_fail only */
+    SVSubscriber_setListener(subscriber, svUpdateListener, arguments);
 
     /* Connect the subscriber to the receiver */
     SVReceiver_addSubscriber(receiver, subscriber);

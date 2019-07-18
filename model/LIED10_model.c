@@ -4,6 +4,7 @@
  * automatically generated from LIED10.iid
  */
 #include "LIED10_model.h"
+#include "custom_structs.h"
 
 static void initializeValues();
 
@@ -7271,15 +7272,12 @@ DataAttribute iedModel_MEAS_MMXU_NamPlt_configRev = {
     NULL,
     0};
 
-
-
-
 extern GSEControlBlock iedModel_CTRL_LLN0_gse0;
 extern GSEControlBlock iedModel_PROT_LLN0_gse0;
 extern GSEControlBlock iedModel_MEAS_LLN0_gse0;
-PhyComAddress p1 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
-PhyComAddress p2 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
-PhyComAddress p3 = {4,1,4097,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+PhyComAddress p1 = {0,0,0x1000,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+PhyComAddress p2 = {0,0,0x1001,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
+PhyComAddress p3 = {0,0,0x1002,{0x1, 0xc, 0xcd, 0x1, 0x0, 0x1}};
 GSEControlBlock iedModel_CTRL_LLN0_gse0 = {&iedModel_CTRL_LLN0, "Status", "LIED10/CTRL/LLN0/Status", "Status", 10002, false, &p1, -1, -1, &iedModel_PROT_LLN0_gse0};
 GSEControlBlock iedModel_PROT_LLN0_gse0 = {&iedModel_PROT_LLN0, "Alarm", "LIED10/PROT/LLN0/Alarm", "Alarm", 10002, false, &p2, -1, -1, &iedModel_MEAS_LLN0_gse0};
 GSEControlBlock iedModel_MEAS_LLN0_gse0 = {&iedModel_MEAS_LLN0, "Meas", "LIED10/MEAS/LLN0/Meas", "Meas", 10002, false, &p3, -1, -1, NULL};
@@ -7307,4 +7305,15 @@ IedModel iedModel = {
 static void
 initializeValues()
 {
+    /* Initialize MEAS/MMXU.Hz to 50.0f */
+    iedModel_MEAS_MMXU_Hz_instMag_f.mmsValue = MmsValue_newFloat(50.0f);
+    iedModel_MEAS_MMXU_Hz_mag_f.mmsValue = MmsValue_newFloat(50.0f);
+    
+    /* CB should be closed (1), and alarm == false initially */
+    iedModel_CTRL_XCBR_Pos_stVal.mmsValue = MmsValue_newIntegerFromInt32(1);
+    iedModel_PROT_PIOC_Op_general.mmsValue = MmsValue_newBoolean(false);
+    
+    /* Initialise triggers here for on-demand GOOSE publishing */
+    iedModel_CTRL_XCBR_Pos_stVal.triggerOptions = TRG_OPT_DATA_CHANGED;
+    iedModel_PROT_PIOC_Op_general.triggerOptions = TRG_OPT_DATA_CHANGED;
 }

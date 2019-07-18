@@ -21,7 +21,7 @@ build/Debug/GNU-Linux/sv_in.o: sv_in.c .install/include/hal_thread.h \
  controller/../model/custom_structs.h .install/include/mms_value.h \
  controller/prot_controller.h controller/overcurrent_controller.h \
  controller/prot_controller.h controller/meas_controller.h \
- controller/ctrl_controller.h
+ controller/ctrl_controller.h .install/include/goose_subscriber.h
 
 .install/include/hal_thread.h:
 
@@ -104,3 +104,5 @@ controller/prot_controller.h:
 controller/meas_controller.h:
 
 controller/ctrl_controller.h:
+
+.install/include/goose_subscriber.h:

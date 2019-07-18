@@ -26,8 +26,11 @@ typedef struct arg_pack{
     char mode;
     int opt, start_port, n;
     LinkedList go_cb_refs;
-    int goose_appid;
-    uint16_t sv_appid;
+    //int goose_in_appid;
+    LinkedList goose_in_appid;
+    LinkedList goose_out_appid;
+    uint16_t sv_in_appid;
+    bool cb_fail;
 } Arg_pack;
 
 typedef struct received_goose_data{

@@ -11,7 +11,9 @@ sudo ./iedprototype -p \<port\> -i \<interface\> -n \<IED number\> -z \<GOOSE_AP
 -p flag determines the port that the MMS server runs on.
 MMS servers typically run on TCP port 102.
 
--i is the interface to run the (MMS server + GOOSE Publisher) + GOOSE Receiver on. 
+-i is the interface to run the IED on. 
+
+-f is an optional flag which simulates circuit breaker failure (msut be used with included modified sv_publisher).
 
 e.g. ./iedprototype -p 102 -i lo -z 4096 -x LIED10CTRL/LLN0\$GO\$Status -x LIED10PROT/LLN0\$GO\$Alarm -x LIED10MEAS/LLN0\$GO\$Meas -c 4096 
 

@@ -1,5 +1,6 @@
-build/Debug/GNU-Linux/controller/meas_controller.o: \
- controller/meas_controller.c controller/meas_controller.h \
+build/Debug/GNU-Linux/controller/cb_failure_controller.o: \
+ controller/cb_failure_controller.c controller/cb_failure_controller.h \
+ .install/include/linked_list.h controller/prot_controller.h \
  controller/../ied_server.h controller/../model/LIED10_model.h \
  .install/include/iec61850_model.h .install/include/iec61850_common.h \
  .install/include/libiec61850_common_api.h .install/include/hal_time.h \
@@ -16,10 +17,15 @@ build/Debug/GNU-Linux/controller/meas_controller.o: \
  .install/include/iec61850_model.h .install/include/iec61850_cdc.h \
  .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
- controller/../model/custom_structs.h .install/include/linked_list.h \
- .install/include/mms_value.h
+ controller/../model/custom_structs.h .install/include/mms_value.h \
+ controller/meas_controller.h controller/ctrl_controller.h \
+ .install/include/goose_subscriber.h
 
-controller/meas_controller.h:
+controller/cb_failure_controller.h:
+
+.install/include/linked_list.h:
+
+controller/prot_controller.h:
 
 controller/../ied_server.h:
 
@@ -77,6 +83,10 @@ controller/../model/LIED10_model.h:
 
 controller/../model/custom_structs.h:
 
-.install/include/linked_list.h:
-
 .install/include/mms_value.h:
+
+controller/meas_controller.h:
+
+controller/ctrl_controller.h:
+
+.install/include/goose_subscriber.h:

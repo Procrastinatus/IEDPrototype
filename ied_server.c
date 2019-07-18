@@ -33,7 +33,7 @@ int start_static_ied_server(void* arguments) {
 	IedServer_setGooseInterfaceId(iedServer, ethernetIfcID);
 	IedServer_enableGoosePublishing(iedServer);
         
-        printf("MMS Server + GOOSE Publisher Using interface: %s\n", ethernetIfcID);
+        //printf("MMS Server + GOOSE Publisher Using interface: %s\n", ethernetIfcID);
 	IedServer_setGooseInterfaceId(iedServer, ethernetIfcID);
         
         /* Register write handlers (for MMS) located in controller(s) */

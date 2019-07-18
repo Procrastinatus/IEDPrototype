@@ -5,14 +5,14 @@
  */
 
 /* 
- * File:   overcurrent_controller.h
+ * File:   cb_failure_controller.h
  * Author: root
  *
- * Created on July 12, 2019, 1:57 PM
+ * Created on July 16, 2019, 4:32 PM
  */
 
-#ifndef OVERCURRENT_CONTROLLER_H
-#define OVERCURRENT_CONTROLLER_H
+#ifndef CB_FAILURE_CONTROLLER_H
+#define CB_FAILURE_CONTROLLER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,14 +26,11 @@ extern "C" {
 #include "meas_controller.h"
 #include "ctrl_controller.h"
 #include "goose_subscriber.h"
-
-    bool is_overcurrent();
-    void store_sampled_value(float current, float voltage);
-    void overcurrent_controller_main(bool cb_fail);
+    
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* OVERCURRENT_CONTROLLER_H */
+#endif /* CB_FAILURE_CONTROLLER_H */
 

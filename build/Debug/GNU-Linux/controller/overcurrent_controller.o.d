@@ -18,7 +18,8 @@ build/Debug/GNU-Linux/controller/overcurrent_controller.o: \
  .install/include/hal_filesystem.h \
  .install/include/iec61850_config_file_parser.h \
  controller/../model/custom_structs.h .install/include/mms_value.h \
- controller/meas_controller.h controller/ctrl_controller.h
+ controller/meas_controller.h controller/ctrl_controller.h \
+ .install/include/goose_subscriber.h
 
 controller/overcurrent_controller.h:
 
@@ -87,3 +88,5 @@ controller/../model/custom_structs.h:
 controller/meas_controller.h:
 
 controller/ctrl_controller.h:
+
+.install/include/goose_subscriber.h:

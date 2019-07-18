@@ -21,7 +21,9 @@ build/Debug/GNU-Linux/goose_in.o: goose_in.c \
  .install/include/iec61850_config_file_parser.h \
  .install/include/mms_value.h controller/ctrl_controller.h \
  controller/../ied_server.h controller/prot_controller.h \
- controller/meas_controller.h
+ controller/meas_controller.h controller/overcurrent_controller.h \
+ controller/prot_controller.h controller/meas_controller.h \
+ controller/ctrl_controller.h controller/cb_failure_controller.h
 
 .install/include/goose_receiver.h:
 
@@ -102,3 +104,13 @@ controller/../ied_server.h:
 controller/prot_controller.h:
 
 controller/meas_controller.h:
+
+controller/overcurrent_controller.h:
+
+controller/prot_controller.h:
+
+controller/meas_controller.h:
+
+controller/ctrl_controller.h:
+
+controller/cb_failure_controller.h:

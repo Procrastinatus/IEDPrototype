@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/controller/cb_failure_controller.o \
 	${OBJECTDIR}/controller/ctrl_controller.o \
 	${OBJECTDIR}/controller/meas_controller.o \
 	${OBJECTDIR}/controller/overcurrent_controller.o \
@@ -76,6 +77,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: .install/lib/libiec6185
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iedprototype ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/controller/cb_failure_controller.o: controller/cb_failure_controller.c
+	${MKDIR} -p ${OBJECTDIR}/controller
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I.install/include -include .install/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/controller/cb_failure_controller.o controller/cb_failure_controller.c
 
 ${OBJECTDIR}/controller/ctrl_controller.o: controller/ctrl_controller.c
 	${MKDIR} -p ${OBJECTDIR}/controller

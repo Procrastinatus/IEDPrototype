@@ -16,10 +16,9 @@ int current_index = 0;
 float sampled_voltages[100];
 float sampled_currents[100];
 
-/* Note that v_rms and its threshold are in units of KILO volts (10.0f = 10,000V) */
 float i_rms, v_rms;
-float i_rms_threshold = 505.0f, v_rms_threshold = 10.0f;
-float total_current_squared,total_voltage_squared;
+float i_rms_threshold = 505.0f, v_rms_threshold = 10000.0f;
+float total_current_squared, total_voltage_squared;
 int no_of_readings = 0;
 
 bool is_overcurrent() {
@@ -37,7 +36,7 @@ bool is_overcurrent() {
     //printf("i_rms is %f and v_rms is %f \n ", i_rms, v_rms);
     if ((v_rms > v_rms_threshold) && (i_rms > i_rms_threshold)) {
         return true;
-    } else {       
+    } else {
         return false;
     }
 }
@@ -59,12 +58,17 @@ void store_sampled_value(float current, float voltage) {
     }
 }
 
-void overcurrent_controller_main() {
+void overcurrent_controller_main(bool cb_fail) {
     /* This method should be called continuously by the SV listener to have the latest sampled values
        to determine if an over-current has occurred. */
     if (is_overcurrent()) {
         set_alarm(true);
-        update_cb_status(0);
+        if (!cb_fail) {
+            update_cb_status(0);
+        }
+        else{
+            printf("CB FAILURE DETECTED \n");
+        }
         printf("OC DETECTED!============OC DETECTED!============OC DETECTED!OC DETECTED!============OC DETECTED!============OC DETECTED!\n");
     } else {
         set_alarm(false);
@@ -72,3 +76,8 @@ void overcurrent_controller_main() {
         printf("-----------NO OVERCURRENT.----------------------NO OVERCURRENT.-----------\n");
     }
 }
+
+/* End of methods pertaining to SV */
+
+/* ======================================================================================================================================================= */
+
